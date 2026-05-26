@@ -1,81 +1,201 @@
-import {View, TextInput, Button, Text, StyleSheet} from 'react-native';
-import {useState} from 'react';
+// import {View, TextInput, Button, Text, StyleSheet} from 'react-native';
+// import {useState} from 'react';
+// import {firebaseConfig} from '../firebaseConfig';
+// import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
+
+
+
+// export default function Login({navigation}){
+
+//     const [email, setemail]=useState('');
+//     const [senha, setsenha]=useState('');
+
+//     const auth = getAuth();
+
+//     const CriarConta=()=>{
+//         createUserWithEmailAndPassword(auth, email, senha)
+//         .then((userCredential) => {
+//             // Signed up 
+//             console.log('conta criada!');
+//             const user = userCredential.user;
+//             console.log(user);
+//             // ...
+//         })
+//         .catch((error) => {
+//             console.log(error)
+//             Alert.alert(error.message)
+//             // ..
+//         });
+//     }
+
+//     const EntrarConta=()=>{
+//         signInWithEmailAndPassword(auth, email, senha)
+//         .then((userCredential) => {
+//             // Signed in 
+//             const user = userCredential.user;
+//             console.log(user);
+//             navigation.navigate('Home');
+//             // ...
+//         })
+//         .catch((error) => {
+//             console.log(error)
+//             Alert.alert(error.message)
+//         });
+//     }
+
+//     return (
+//         <View style={styles.container}>
+
+//             <Text style={styles.texto}>Login</Text>
+
+//             <TextInput
+//                 placeholder="Email"
+//                 placeholderTextColor={'#5d2323ff'}
+//                 value={email}
+//                 onChangeText={setemail}
+//                 style={styles.txtInput}
+//             />
+
+//             <TextInput
+//                 placeholder="Senha"
+//                 placeholderTextColor={'#5d2323ff'}
+//                 value={senha}
+//                 onChangeText={setsenha}
+//                 style={styles.txtInput}
+//                 secureTextEntry
+//             />
+
+//             <Button title="Entrar" color={'#5d2323ff'} onPress={EntrarConta}/>
+//             <Button title="Criar conta" color ={'#5d2323ff'} onPress={CriarConta}   />
+            
+//         </View>
+//     );
+// }
+
+// const styles=StyleSheet.create({
+//     container:{
+//         flex: 1,
+//         justifyContent: 'space-around',
+//         alignItems: 'center',
+//         backgroundColor: '#90c472ff'
+//     },
+
+//     texto:{
+//         fontSize: 30,
+//         color: '#641111ff',
+//         fontWeight: 'bold',
+//     },
+
+//     txtInput:{
+//         borderColor: '#000000ff',
+//         borderWidth: 2,
+//         padding: 5,
+//         color: '#000000ff'
+//     },
+// })
+
+import { View, TextInput, Button, Image, Text, StyleSheet, Alert } from 'react-native';
+import { useState } from 'react';
 import {firebaseConfig} from '../firebaseConfig';
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { getAuth, createUserWithEmailAndPassword ,signInWithEmailAndPassword} from "firebase/auth";
 
+export default function Login({navigation}) {
 
-export default function Login({navigation}){
+const [email, setemail] = useState('');
+const [senha, setsenha] = useState('');
 
-    const [email, setemail]=useState('');
-    const [senha, setsenha]=useState('');
+const auth = getAuth();
 
-    const auth = getAuth();
-
-    const CriarConta=()=>{
-        createUserWithEmailAndPassword(auth, email, senha)
-        .then((userCredential) => {
-            // Signed up 
-            console.log('conta criada!');
-            const user = userCredential.user;
-            console.log(user);
-            // ...
-        })
-        .catch((error) => {
-            console.log(error)
-            Alert.alert(error.message)
-            // ..
-        });
-    }
-
-    const EntrarConta=()=>{
-        signInWithEmailAndPassword(auth, email, senha)
-        .then((userCredential) => {
-            // Signed in 
-            const user = userCredential.user;
-            console.log(user);
-            navigation.navigate('Home');
-            // ...
-        })
-        .catch((error) => {
-            console.log(error)
-            Alert.alert(error.message)
-        });
-    }
-
-    return(
-        <View style={styles.container}>
-            <Text style={styles.texto}>LOGIN</Text>
-            <TextInput placeholder='Email' placeholderTextColor={'#641111ff'} value={email} onChangeText={setEmail} style={styles.txtInput}></TextInput>
-            <TextInput placeholder='Senha' placeholderTextColor={'#641111ff'} value={senha} onChangeText={setSenha} style={styles.txtInput}></TextInput>
-            <Button 
-            title='Entrar
-            ' color={'#a11c1cff'}
-            />
-            <Button title='Criar conta' colar={'#f000'}/>
-
-        </View>
-    )
+const CriarConta = () => {
+    createUserWithEmailAndPassword(auth, email, senha)
+    .then((userCredential) => {
+    // Signed up 
+    console.log('conta criada')
+    const user = userCredential.user;
+    // ...
+    console.log(user)
+  })
+  .catch((error) => {
+    console.log(error)
+    Alert.alert(error.message)
+    // ..
+  });
+}
+const EntrarConta = () => {
+    signInWithEmailAndPassword(auth, email, senha)
+  .then((userCredential) => {
+    // Signed in 
+    const user = userCredential.user;
+    console.log(user)
+    navigation.navigate('Home')
+    // ...
+  })
+  .catch((error) => {
+    const errorCode = error.code;
+    const errorMessage = error.message;
+  });
 }
 
-const styles=StyleSheet.create({
-    container:{
+
+    return (
+        <View style={styles.container}>
+
+            <Text style={styles.texto}>Login</Text>
+
+            <TextInput
+                placeholder="Email"
+                placeholderTextColor={'#5d2323ff'}
+                value={email}
+                onChangeText={setemail}
+                style={styles.txtInput}
+            />
+
+            <TextInput
+                placeholder="Senha"
+                placeholderTextColor={'#5d2323ff'}
+                value={senha}
+                onChangeText={setsenha}
+                style={styles.txtInput}
+                secureTextEntry
+            />
+
+            <Button title="Entrar" color={'#5d2323ff'} onPress={EntrarConta}/>
+            <Button title="Criar conta" color ={'#5d2323ff'} onPress={CriarConta}   />
+            
+        </View>
+    );
+}
+
+const styles = StyleSheet.create({
+    container: {
         flex: 1,
-        justifyContent: 'space-around',
-        alignItems: 'center',
-        backgroundColor: '#90c472ff'
+        justifyContent: 'center',
+        alignItems: 'center', // centraliza tudo
+        backgroundColor: '#ffffffff',
     },
 
-    texto:{
+    texto: {
         fontSize: 30,
-        color: '#641111ff',
+        color: 'rgba(0, 170, 255, 1)',
         fontWeight: 'bold',
+        marginBottom: 20,
     },
 
-    txtInput:{
-        borderColor: '#000000ff',
-        borderWidth: 2,
-        padding: 5,
-        color: '#000000ff'
+    txtInput: {
+        fontSize: 20,
+        textAlign: 'center',
+        borderWidth: 1,
+        borderColor: '#000',
+        padding: 10, // corrigindo
+        width: '80%',
+        marginBottom: 10,
+        borderRadius: 8,
     },
-})
+
+    foto: {
+        height: 150,
+        width: 150,
+        marginBottom: 20,
+        borderRadius: 75, // imagem redonda
+    },
+});

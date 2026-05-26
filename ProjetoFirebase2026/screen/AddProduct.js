@@ -34,15 +34,15 @@ export default function AddProduct() {
     )
 }
 
-const styles=StyleSheet.create({
-    container:{
-        flex:1,
-        padding: 20
-    },
-    texto:{
-        fontSize:30,
-        color: '#f000',
-        fontWeight: 'bold',
-        textAlign: 'center'
-    }
-})
+// const styles=StyleSheet.create({
+//     container:{
+//         flex:1,
+//         padding: 20
+//     },
+//     texto:{
+//         fontSize:30,
+//         color: '#f000',
+//         fontWeight: 'bold',
+//         textAlign: 'center'
+//     }
+// })

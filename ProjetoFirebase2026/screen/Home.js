@@ -1,7 +1,9 @@
 import {View, Text, StyleSheet, Button, ScrollView} from 'react-native'
-import { useState, useEffectEvent } from 'react';
+import { useState, useEffect } from 'react';
 import { database } from '../firebaseConfig';
 import { collection, getDocs } from 'firebase/firestore';
+import { FlatList } from 'react-native-web';
+import CardProduct from '../components/Card';
 
 
 export default function Home({navigation}) {
@@ -14,7 +16,7 @@ export default function Home({navigation}) {
         const querySnapshot=await getDocs(collection(database, 'produtos'));
         const lista=[];
         querySnapshot.forEach((doc)=>{
-          lista.push({id: doc.id, doc.data()})
+          lista.push({ id: doc.id, ...doc.data() })
         })
         setProdutos(lista);
       }catch(error){
@@ -27,7 +29,13 @@ export default function Home({navigation}) {
   return (
     <ScrollView style={{flex:1}}>
     <View style={styles.container}>
-      <Text style={styles.txt}>HOME</Text>
+      <Text style={styles.txt}>Home</Text>
+      <View style={styles.cards}>
+        <FlatList data={produtos} renderItem={({item})=>(
+          <CardProduct imagem={item.imagem} nome={item.nome} valor={item.valor}/>
+        )}
+        keyExtractor={item=>item.id}/>
+      </View>
       <Button title='Add Produto' onPress={()=>(navigation.navigate("AddProduct"))}/>
 
     </View>
